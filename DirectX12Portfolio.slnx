@@ -1,0 +1,16 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="icon.ico" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Dx12Framework/Dx12Framework.vcxproj" Id="a2621934-f994-4abc-b7d8-95a8b0971c17" />
+  <Project Path="0_Dx12Initialization/0_Dx12Initialization.vcxproj" Id="9a46aae0-8485-4859-94a7-839f0f5ebc5b" />
+  <Project Path="1_Dx12Triangle/1_Dx12Triangle.vcxproj" Id="b923e539-1b62-4fbf-ac52-83792542e209" />
+  <Project Path="2_Dx12ConstantBuffer/2_Dx12ConstantBuffer.vcxproj" Id="138b31da-fc8d-471b-8962-a70a4bb0ea48" />
+</Solution>
