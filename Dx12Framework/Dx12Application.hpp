@@ -16,5 +16,7 @@ namespace Dx12Framework {
 
 		virtual void Update(float timeDelta) = 0;
 		virtual void Render(const Dx12Framework::Dx12Frame& frame) = 0;
+
+		virtual const wchar_t* GetApplicationName() const { return L"Dx12Framework"; };
 	};
 }

@@ -3,6 +3,7 @@
 #include "Dx12ApplicationLoader.hpp"
 
 #include "WindowsApplication.hpp"
+#include <cmath>
 
 namespace Dx12Framework {
 
@@ -20,7 +21,8 @@ namespace Dx12Framework {
 
 		static inline const wchar_t* appDlls[] = {
 			TEXT("../applications/1_Dx12Triangle.dll"),
-			TEXT("../applications/2_Dx12ConstantBuffer.dll")
+			TEXT("../applications/2_Dx12ConstantBuffer.dll"),
+			TEXT("../applications/3_Dx12TexturesAndMips.dll")
 		};
 
 		Dx12ApplicationLauncher() : WindowsApplication(TEXT("Dx12Framework")),
@@ -34,6 +36,7 @@ namespace Dx12Framework {
 		// Inherited via WindowsApplication
 		bool Epoch(float timeDelta) override {
 			if (ShouldFlushFrame) {
+				SetWindowTextW(windowHandle, loader->GetApplicationName());
 				renderWindow.FlushFrame();
 				ShouldFlushFrame = false;
 			}

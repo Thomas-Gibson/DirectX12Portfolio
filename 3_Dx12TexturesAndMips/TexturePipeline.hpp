@@ -1,6 +1,7 @@
 #pragma once
+#include <d3dcompiler.h> // D3DReadFileToBlob
 
-struct TrianglePipeline {
+struct TexturePipeline {
 private:
 	struct {
 		CD3DX12_PIPELINE_STATE_STREAM_ROOT_SIGNATURE rootSig;
@@ -12,7 +13,7 @@ private:
 
 	static constexpr D3D12_INPUT_ELEMENT_DESC inputElementDescs[] = {
 		{"POSITION", 0U, DXGI_FORMAT_R32G32_FLOAT, 0U, 0U, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0U},
-		{"COLOR", 0U, DXGI_FORMAT_R32G32B32A32_FLOAT, 0U, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0U},
+		{"TEXCOORD", 0U, DXGI_FORMAT_R32G32_FLOAT, 0U, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0U},
 	};
 
 
@@ -20,12 +21,12 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> pDxRootSignature;
 
 public:
-	TrianglePipeline(Dx12Framework::Dx12DeviceContext& dc) {
+	TexturePipeline(Dx12Framework::Dx12DeviceContext& dc) {
 		// Create Root signature
 		Microsoft::WRL::ComPtr<ID3DBlob> VertexShader, Pixelshader;
 		{
-			ThrowIfFailed(D3DReadFileToBlob(L"shaders/Dx12ConstantBuffer_VertexShader.cso", VertexShader.GetAddressOf()));
-			ThrowIfFailed(D3DReadFileToBlob(L"shaders/Dx12ConstantBuffer_PixelShader.cso", Pixelshader.GetAddressOf()));
+			ThrowIfFailed(D3DReadFileToBlob(L"shaders/Dx12TexturesAndMips_VertexShader.cso", VertexShader.GetAddressOf()));
+			ThrowIfFailed(D3DReadFileToBlob(L"shaders/Dx12TexturesAndMips_PixelShader.cso", Pixelshader.GetAddressOf()));
 
 			ThrowIfFailed(dc->CreateRootSignature(0U,
 						  VertexShader->GetBufferPointer(),

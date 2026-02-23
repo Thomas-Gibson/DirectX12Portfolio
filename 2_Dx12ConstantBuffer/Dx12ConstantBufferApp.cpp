@@ -17,8 +17,17 @@ Dx12ConstantBufferApp::Dx12ConstantBufferApp(Dx12Framework::Dx12DeviceContext& d
 	// Set matrices
 	{
 		worldMat = DirectX::XMMatrixIdentity();
-		viewMat = DirectX::XMMatrixLookAtLH(XMVectorSet(0.0f, 0.0f, -5.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
-		projectionMat = DirectX::XMMatrixPerspectiveFovLH(XMConvertToRadians(45.0f), 16.0f / 9.0f, 0.1f, 1000.0f);
+
+		const XMVECTOR CameraPos = XMVectorSet(0.0f, 0.0f, -5.0f, 0.0f);
+		const XMVECTOR FocusPoint = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+		const XMVECTOR UpDirection = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+		viewMat = DirectX::XMMatrixLookAtLH(CameraPos, FocusPoint, UpDirection);
+
+		constexpr float FOV = XMConvertToRadians(45.0f);
+		constexpr float AspectRatio = 16.0f / 9.0f;
+		constexpr float NearZ = 0.1f;
+		constexpr float FarZ = 1000.0f;
+		projectionMat = DirectX::XMMatrixPerspectiveFovLH(FOV, AspectRatio, NearZ, FarZ);
 	}
 }
 
@@ -43,7 +52,7 @@ void Dx12ConstantBufferApp::InitConstantBuffer()
 void Dx12ConstantBufferApp::Update(float timeDelta)
 {
 	// Apply a z-axis rotation 
-	const float spin = 200 * timeDelta;
+	const float spin = 50 * timeDelta;
 	worldMat *= XMMatrixRotationZ(XMConvertToRadians(spin));
 
 	const XMMATRIX worldViewProjection = worldMat * viewMat * projectionMat;

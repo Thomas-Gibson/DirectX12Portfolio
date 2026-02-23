@@ -45,4 +45,6 @@ public:
 
 	void Update(float timeDelta) override;
 	void Render(const Dx12Framework::Dx12Frame& frame) override;
+
+	const wchar_t* GetApplicationName() const override { return L"DirectX12: Constant Buffer"; }
 };
