@@ -25,8 +25,8 @@ public:
 		// Create Root signature
 		Microsoft::WRL::ComPtr<ID3DBlob> VertexShader, Pixelshader;
 		{
-			ThrowIfFailed(D3DReadFileToBlob(L"shaders/Dx12TexturesAndMips_VertexShader.cso", VertexShader.GetAddressOf()));
-			ThrowIfFailed(D3DReadFileToBlob(L"shaders/Dx12TexturesAndMips_PixelShader.cso", Pixelshader.GetAddressOf()));
+			ThrowIfFailed(D3DReadFileToBlob(L"shaders/Dx12Textures_VertexShader.cso", VertexShader.GetAddressOf()));
+			ThrowIfFailed(D3DReadFileToBlob(L"shaders/Dx12Textures_PixelShader.cso", Pixelshader.GetAddressOf()));
 
 			ThrowIfFailed(dc->CreateRootSignature(0U,
 						  VertexShader->GetBufferPointer(),

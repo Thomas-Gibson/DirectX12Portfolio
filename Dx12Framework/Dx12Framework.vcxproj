@@ -159,6 +159,7 @@
     <ClInclude Include="Dx12DeviceContext.hpp" />
     <ClInclude Include="Dx12CommandQueue.hpp" />
     <ClInclude Include="Dx12Frame.hpp" />
+    <ClInclude Include="Dx12Mesh.hpp" />
     <ClInclude Include="Dx12RenderWindow.hpp" />
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="resource.h" />
@@ -195,6 +196,9 @@
       <Project>{138b31da-fc8d-471b-8962-a70a4bb0ea48}</Project>
     </ProjectReference>
     <ProjectReference Include="..\3_Dx12TexturesAndMips\3_Dx12TexturesAndMips.vcxproj">
+      <Project>{f896a4bc-2b7b-4b3c-a880-bc455e459f85}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\3_Dx12Textures\3_Dx12Textures.vcxproj">
       <Project>{f896a4bc-2b7b-4b3c-a880-bc455e459f85}</Project>
     </ProjectReference>
   </ItemGroup>

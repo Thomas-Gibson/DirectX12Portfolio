@@ -10,7 +10,7 @@ extern "C" _declspec(dllexport) Dx12Framework::Dx12Application* GetApplication(D
 Dx12ConstantBufferApp::Dx12ConstantBufferApp(Dx12Framework::Dx12DeviceContext& dc) :
 	dxDeviceContext(dc),
 	pipeline(dc),
-	triangle(dc)
+	triangle(dc, triangleVertices, triangleIndices)
 {
 	InitConstantBuffer();
 

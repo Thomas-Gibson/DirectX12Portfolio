@@ -22,14 +22,27 @@
 #include <DirectXColors.h>
 
 #include "TrianglePipeline.hpp"
-#include "TriangleMesh.hpp"
+#include "Dx12Mesh.hpp"
 
 class Dx12ConstantBufferApp : public Dx12Framework::Dx12Application {
 public:
 	Dx12Framework::Dx12DeviceContext& dxDeviceContext;
-
 	TrianglePipeline pipeline;
-	TriangleMesh triangle;
+
+	struct TriangleVertex {
+		DirectX::XMFLOAT2 pos;
+		DirectX::XMFLOAT4 color;
+	};
+
+	static inline TriangleVertex triangleVertices[] = {
+			{DirectX::XMFLOAT2(0.8, -0.8), DirectX::XMFLOAT4(DirectX::Colors::Blue) },
+			{DirectX::XMFLOAT2(-0.8, -0.8), DirectX::XMFLOAT4(DirectX::Colors::Red) },
+			{DirectX::XMFLOAT2(0.0,  0.8), DirectX::XMFLOAT4(DirectX::Colors::LimeGreen) },
+	};
+
+	static inline uint32_t triangleIndices[] = { 0, 1, 2 };
+
+	Dx12Framework::Dx12Mesh<TriangleVertex> triangle;
 
 	DirectX::XMMATRIX worldMat;
 	DirectX::XMMATRIX viewMat;

@@ -181,7 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dx12ConstantBufferApp.hpp" />
-    <ClInclude Include="TriangleMesh.hpp" />
     <ClInclude Include="TrianglePipeline.hpp" />
   </ItemGroup>
   <ItemGroup>

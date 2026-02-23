@@ -1,4 +1,5 @@
 #pragma once
+#include <d3dcompiler.h> // D3DReadFileToBlob
 
 struct TrianglePipeline {
 private:

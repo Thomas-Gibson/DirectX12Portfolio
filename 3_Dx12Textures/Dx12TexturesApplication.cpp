@@ -12,7 +12,7 @@ Dx12Framework::Dx12Application* GetApplication(Dx12Framework::Dx12DeviceContext&
 
 Dx12TexturesApplication::Dx12TexturesApplication(Dx12Framework::Dx12DeviceContext& dc) :
 	texturePipeline(dc),
-	square(dc) {
+	square(dc, squareVertices, squareIndices) {
 	InitConstantBuffer();
 	InitTexture();
 

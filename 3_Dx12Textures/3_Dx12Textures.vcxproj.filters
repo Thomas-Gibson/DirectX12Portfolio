@@ -13,12 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ShaderFiles">
+      <UniqueIdentifier>{284620bb-357c-4b6a-bf12-21c0f5078878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dx12TexturesApplication.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SquareMesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TexturePipeline.hpp">
@@ -32,11 +32,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Common.hlsli" />
+    <None Include="Common.hlsli">
+      <Filter>ShaderFiles</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Dx12Textures_PixelShader.hlsl" />
-    <FxCompile Include="Dx12Textures_VertexShader.hlsl" />
-    <FxCompile Include="Dx12Textures_ComputeShader.hlsl" />
+    <FxCompile Include="Dx12Textures_PixelShader.hlsl">
+      <Filter>ShaderFiles</Filter>
+    </FxCompile>
+    <FxCompile Include="Dx12Textures_VertexShader.hlsl">
+      <Filter>ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
