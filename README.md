@@ -14,7 +14,21 @@
 
 <br>
 
-# Run in 3 Clicks
-<details> <summary>1️) Click the green code button at the top of the repo</summary> <p> <img width="593" height="108" alt="Click Code button in GitHub" src="https://github.com/user-attachments/assets/b5fc0de5-635a-486f-bf56-4588f1c8046a" /> </p> </details>
-<details> <summary>2️) Click "Open with Visual Studio"</summary> <p> <img width="592" height="501" alt="Open in Visual Studio" src="https://github.com/user-attachments/assets/af4d6439-7587-4115-8d96-8991dcc56eb3" /> </p> </details>
-<details> <summary>3️) Click Run or press F5</summary> <p> <img width="247" height="48" alt="Run button in Visual Studio" src="https://github.com/user-attachments/assets/4ec041ca-99fb-4fb5-91f6-391504efa1a5" /> </p> </details>
+# How to use
+<details> <summary> Prerequisites </summary>
+    <ul>
+        <li>Have the latest version of Visual Studio 2026 installed/updated with the C++ desktop development workload.
+        <li>Make sure you have the latest Windows SDK installed. This can be obtained by updating or installing Visual Studio.</li>
+        <li>Have CMake installed on your system.</li>
+    </ul>
+</details>
+
+<details> <summary> Run Instructions </summary>
+    <ol>
+        <li>Clone the git repository: https://github.com/Thomas-Gibson/DirectX12Portfolio.git <\li>
+        <li>Right-click on your copy and under "Show more options" select "Open with Visual Studio." <\li>
+        <li>Make sure the build target is set to the top level CMAKELISTS.txt. </li>
+        <li>Press f5 to build and run.</li>
+        <li>It will take some time to build as it brings over dependencies such as Agility SDK, ASSIMP, DirectXTK12 so grab some coffee ☕.</li>
+    </ol>
+</details>
