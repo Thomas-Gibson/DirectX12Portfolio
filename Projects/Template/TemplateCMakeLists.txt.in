@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.20)
+project(@APP_NAME@)
+
+file(GLOB_RECURSE SOURCE_FILES
+    "*.cpp"
+    "*.h"
+    "*.hpp"
+)
+
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+target_link_libraries(${PROJECT_NAME} PRIVATE Dx12Core Dx12ImGui)
+
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.assetroot" "${CMAKE_CURRENT_SOURCE_DIR}/Assets")
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.assetroot" 
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${PROJECT_NAME}.assetroot"
+    COMMENT "Copying ${PROJECT_NAME}.assetroot to output directory"
+)
+
+## Create a small .assetroot sidecar and copy it next to the built DLL so the launcher
+## can set DX12_PLUGIN_ASSET_ROOT and plugins can load assets from the project source tree.
+#include("${CMAKE_CURRENT_LIST_DIR}/AssetSidecar.cmake")
+#add_asset_sidecar_for_target(${PROJECT_NAME})
