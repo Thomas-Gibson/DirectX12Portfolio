@@ -25,8 +25,8 @@
 
 <details> <summary> Run Instructions </summary>
     <ol>
-        <li>Clone the git repository: https://github.com/Thomas-Gibson/DirectX12Portfolio.git <\li>
-        <li>Right-click on your copy and under "Show more options" select "Open with Visual Studio." <\li>
+        <li>Clone the git repository: https://github.com/Thomas-Gibson/DirectX12Portfolio.git </li>
+        <li>Right-click on your copy and under "Show more options" select "Open with Visual Studio." </li>
         <li>Make sure the build target is set to the top level CMAKELISTS.txt. </li>
         <li>Press f5 to build and run.</li>
         <li>It will take some time to build as it brings over dependencies such as Agility SDK, ASSIMP, DirectXTK12 so grab some coffee ☕.</li>
