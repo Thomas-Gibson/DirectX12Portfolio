@@ -32,3 +32,8 @@
         <li>It will take some time to build as it brings over dependencies such as Agility SDK, ASSIMP, DirectXTK12 so grab some coffee ☕.</li>
     </ol>
 </details>
+
+
+# Projects
+* [Hello Triangle](./Projects/Dx12Triangle/) - Draws a simple rainbow triangle.
+* [Hello Texture](./Projects/Dx12Texture/) - Shows texture loading and drawing.
