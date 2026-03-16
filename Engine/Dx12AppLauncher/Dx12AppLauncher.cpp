@@ -70,13 +70,7 @@ Dx12Framework::Dx12ApplicationLauncher::~Dx12ApplicationLauncher()
 	if (dll) {
 
 		FreeLibrary(dll);
-		// restore previous DX12_PLUGIN_ASSET_ROOT if we saved one
-		if (g_prevAssetEnvPresent) {
-			SetEnvironmentVariableA("DX12_PLUGIN_ASSET_ROOT", g_prevAssetEnv.c_str());
-		}
-		else {
-			SetEnvironmentVariableA("DX12_PLUGIN_ASSET_ROOT", nullptr); // clear
-		}
+		SetEnvironmentVariableA("DX12_PLUGIN_ASSET_ROOT", nullptr); // clear
 	}
 
 	ImGui_ImplDX12_Shutdown();
