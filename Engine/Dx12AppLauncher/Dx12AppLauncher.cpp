@@ -68,7 +68,6 @@ Dx12Framework::Dx12ApplicationLauncher::~Dx12ApplicationLauncher()
 	if (pApp) delete pApp;
 
 	if (dll) {
-
 		FreeLibrary(dll);
 		SetEnvironmentVariableA("DX12_PLUGIN_ASSET_ROOT", nullptr); // clear
 	}
@@ -126,7 +125,9 @@ void Dx12Framework::Dx12ApplicationLauncher::LoadDll(const fs::path& path)
 	// Update new dll state
 	this->dll = nextDll;
 	this->pApp = pNextApp;
-}
+
+	SetWindowTextW(windowHandle, pApp->GetApplicationName());
+}  
 
 
 void Dx12Framework::Dx12ApplicationLauncher::RefreshAvailablePlugins()
