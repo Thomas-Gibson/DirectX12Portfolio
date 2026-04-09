@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(@APP_NAME@)
+project(Dx12Lighting)
 
 file(GLOB_RECURSE SOURCE_FILES
     "*.cpp"
@@ -19,6 +19,5 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMENT "Copying ${PROJECT_NAME}.assetroot to output directory"
 )
 
-# Example for compiling shaders
-# compile_shader(${PROJECT_NAME} "${CMAKE_CURRENT_LIST_DIR}/VertexShader.hlsl" "main" "vs_6_0")
-# compile_shader(${PROJECT_NAME} "${CMAKE_CURRENT_LIST_DIR}/PixelShader.hlsl" "main" "ps_6_0")
+compile_shader(${PROJECT_NAME} "${CMAKE_CURRENT_LIST_DIR}/VertexShader.hlsl" "main" "vs_6_0")
+compile_shader(${PROJECT_NAME} "${CMAKE_CURRENT_LIST_DIR}/PixelShader.hlsl" "main" "ps_6_0")

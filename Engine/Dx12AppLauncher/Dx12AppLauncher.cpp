@@ -125,6 +125,9 @@ void Dx12Framework::Dx12ApplicationLauncher::LoadDll(const fs::path& path)
 	// Update new dll state
 	this->dll = nextDll;
 	this->pApp = pNextApp;
+		
+	pApp->keyboard = &keyboard;
+	pApp->mouse = &mouse;
 
 	SetWindowTextW(windowHandle, pApp->GetApplicationName());
 }  

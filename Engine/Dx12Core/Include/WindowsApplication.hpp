@@ -3,22 +3,18 @@
 #include "dx12.hpp"
 #include <Windows.h>
 #include <windowsx.h>
-#include "WindowsClock.hpp"
 #include <iostream>
 #include <format>
+#include "WindowsClock.hpp"
+#include "Keyboard.hpp"
 
 namespace Dx12Framework {
 
-	struct KeyInfo {
-		char keyCode;
-		bool newPress;
-
-		bool operator == (char keyCode) { return this->keyCode == keyCode; }
-	};
-
-	class Dx12Core_API WindowsApplication {
+	class WindowsApplication {
 	public:
 		const HWND windowHandle;
+		Keyboard keyboard = {};
+		MouseState mouse = {};
 
 		WindowsApplication(const char* title);
 		virtual ~WindowsApplication() = default;
@@ -26,8 +22,6 @@ namespace Dx12Framework {
 		void Run();
 
 		virtual bool Epoch(float timeDelta) = 0;
-		virtual void OnKeyPress(KeyInfo key) = 0;
-		virtual void OnKeyRelease(KeyInfo key) = 0;
 
 		double Time() const { return time; }
 		float DeltaTime() const { return deltaTime; }

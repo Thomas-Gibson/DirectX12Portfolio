@@ -14,6 +14,7 @@ namespace Dx12Framework {
 
 		void Clear(const FLOAT clearColor[4]) const {
 			pCommandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+			pCommandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 		}
 
 		void End();
@@ -24,9 +25,14 @@ namespace Dx12Framework {
 		UINT32 Width() const { return width; }
 		UINT32 Height() const { return height; }
 
+		uint32_t nextRootIndex() const { return rootIndex++; }
+
 	private:
+		mutable uint32_t rootIndex;
 		Microsoft::WRL::ComPtr<ID3D12Resource2> pDxRenderTarget;
 		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;
+		D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle;
+
 		UINT64 Fence = 0llu;
 
 		Microsoft::WRL::ComPtr<ID3D12CommandAllocator> pCommandAllocator;
@@ -41,6 +47,6 @@ namespace Dx12Framework {
 		D3D12_VIEWPORT viewport = { };
 
 		friend class Dx12RenderWindow;
-		void Initialize(ID3D12Device14* pDevice, Microsoft::WRL::ComPtr<ID3D12Resource2> pRenderTarget, D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle);
+		void Initialize(ID3D12Device14* pDevice, Microsoft::WRL::ComPtr<ID3D12Resource2> pRenderTarget, D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle, D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle);
 	};
 }

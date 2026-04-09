@@ -3,7 +3,7 @@
 
 #include "Dx12DeviceContext.hpp"
 #include "Dx12Frame.hpp"
-
+#include "Dx12AssetLoader.hpp"
 #include <vector>
 
 namespace Dx12Framework {
@@ -97,7 +97,7 @@ namespace Dx12Framework {
 			}
 		}
 
-		Dx12Mesh(const Dx12Framework::Dx12DeviceContext& dc, std::span<T_Vertex> vertices, std::span<const uint32_t> indices) {
+		Dx12Mesh(const Dx12Framework::Dx12DeviceContext& dc, std::span<const T_Vertex> vertices, std::span<const uint32_t> indices) {
 
 			Microsoft::WRL::ComPtr<ID3D12Resource2> pDxStagingBuffer; // used to stage vertex data
 			const CD3DX12_RESOURCE_DESC bufferDesc = CD3DX12_RESOURCE_DESC::Buffer(vertices.size_bytes() + indices.size_bytes());

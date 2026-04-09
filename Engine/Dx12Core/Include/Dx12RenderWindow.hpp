@@ -15,9 +15,10 @@ namespace Dx12Framework {
 		const Dx12CommandQueue& commandQueue;
 		Microsoft::WRL::ComPtr<IDXGISwapChain4> pDxgiSwapChain;
 		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> pDxRtvHeap;
+		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> pDxDsvHeap;
 
 		// Frame resources
-
+		Microsoft::WRL::ComPtr<ID3D12Resource2> pDxDsvBuffer;
 		Dx12Frame frames[FrameCount];
 		uint32_t frameIndex = 0U;
 

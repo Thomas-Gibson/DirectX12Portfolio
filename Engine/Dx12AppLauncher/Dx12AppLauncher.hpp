@@ -49,14 +49,6 @@ namespace Dx12Framework {
 		void ShowLauncherUI();
 
 		// Inherited via WindowsApplication
-		bool Epoch(float timeDelta) override;
-		
-
-		void OnKeyPress(KeyInfo key) override {
-		}
-
-		void OnKeyRelease(KeyInfo key) override {
-		}
-
+		bool Epoch(float timeDelta) override;		
 	};
 }

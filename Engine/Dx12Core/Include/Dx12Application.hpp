@@ -3,6 +3,7 @@
 
 #include "Dx12Frame.hpp"
 #include "Dx12DeviceContext.hpp"
+#include "Keyboard.hpp"
 #include <imgui.h>
 #include <filesystem>
 
@@ -10,6 +11,9 @@ namespace Dx12Framework {
 
 	class Dx12Application {
 	public:
+		Keyboard* keyboard;
+		MouseState* mouse;
+
 		const Dx12Framework::Dx12DeviceContext& dc;
 		Dx12Application(const Dx12Framework::Dx12DeviceContext& dc, ImGuiContext* imgui) : dc(dc) {
 			if (imgui) {

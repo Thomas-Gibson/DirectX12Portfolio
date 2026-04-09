@@ -34,6 +34,13 @@ Dx12Framework::WindowsApplication::WindowsApplication(const char* title) :
 	if (!windowHandle) {
 		throw std::runtime_error("Failed to create window");
 	}
+
+	RAWINPUTDEVICE rid;
+	rid.usUsagePage = 0x01; // Generic desktop controls
+	rid.usUsage = 0x02; // Mouse
+	rid.dwFlags = 0;
+	rid.hwndTarget = windowHandle;
+	RegisterRawInputDevices(&rid, 1, sizeof(rid));
 }
 
 void Dx12Framework::WindowsApplication::Run()
@@ -44,13 +51,16 @@ void Dx12Framework::WindowsApplication::Run()
 
 
 	MSG msg = {};
-	while (msg.message != WM_QUIT) {
+	bool quit = false;
+
+	while (!quit) {
 		while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+
+			if (msg.message == WM_QUIT) { quit = true; }
+
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
-
 
 		if (!Epoch(deltaTime)) {
 			SendMessage(windowHandle, WM_CLOSE, 0U, 0U);
@@ -79,34 +89,60 @@ LRESULT Dx12Framework::WindowsApplication::MainProc(HWND hwnd, UINT msg, WPARAM 
 {
 
 	extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	
+
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam)) {
 		return true;
 	}
 
 	WindowsApplication* pApp = reinterpret_cast<WindowsApplication*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+	Keyboard& kbd = pApp->keyboard;
+	MouseState& mouse = pApp->mouse;
 
 	switch (msg) {
 		case WM_KEYDOWN: {
-
-			KeyInfo kInfo = {
-				.keyCode = static_cast<char>(wParam),
-				.newPress = !(lParam & (1 << 30))
-			};
-
-			pApp->OnKeyPress(kInfo);
-
+			kbd.OnKeyPress(static_cast<uint8_t>(wParam));
 		} break;
-
 
 		case WM_KEYUP: {
-			KeyInfo kInfo = {
-				.keyCode = static_cast<char>(wParam),
-				.newPress = false
-			};
-
-			pApp->OnKeyRelease(kInfo);
+			kbd.OnKeyRelease(static_cast<uint8_t>(wParam));
 		} break;
+
+		case WM_INPUT: {
+			UINT dwSize = sizeof(RAWINPUT);
+			static BYTE lpb[sizeof(RAWINPUT)];
+
+			GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, nullptr, &dwSize, sizeof(RAWINPUTHEADER));
+			RAWINPUT* raw =  (RAWINPUT*)lpb;
+
+			if (raw->header.dwType == RIM_TYPEMOUSE) {
+				mouse.dx += raw->data.mouse.lLastX;
+				mouse.dy += raw->data.mouse.lLastX;
+			}
+		} break;
+
+		case WM_LBUTTONDOWN:
+			mouse.leftButton = true;
+			break;
+
+		case WM_LBUTTONUP:
+			mouse.leftButton = false;
+			break;
+
+		case WM_RBUTTONDOWN:
+			mouse.rightButton = true;
+			break;
+
+		case WM_RBUTTONUP:
+			mouse.rightButton = false;
+			break;
+
+		case WM_MBUTTONDOWN:
+			mouse.middleButton= true;
+			break;
+
+		case WM_MBUTTONUP:
+			mouse.middleButton = false;
+			break;
 
 		case WM_CLOSE:
 			DestroyWindow(hwnd);
@@ -118,6 +154,8 @@ LRESULT Dx12Framework::WindowsApplication::MainProc(HWND hwnd, UINT msg, WPARAM 
 		default:
 			return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
+
+	return 0;
 }
 
 HWND Dx12Framework::WindowsApplication::CreateWindowHandle(const char* title)

@@ -1,4 +1,5 @@
 #include "Dx12RenderWindow.hpp"
+#include <d3dx12/d3dx12.h>
 using namespace Dx12Framework;
 
 
@@ -72,14 +73,45 @@ void Dx12Framework::Dx12RenderWindow::CreateRenderTargetViews(ID3D12Device14* pD
 		const UINT rtvDescriptorSize = pDxDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = pDxRtvHeap->GetCPUDescriptorHandleForHeapStart();
 
-		for (UINT i = 0; i < FrameCount; i++) {
-			Microsoft::WRL::ComPtr<ID3D12Resource2> pRenderTarget;
-			pDxgiSwapChain->GetBuffer(i, IID_PPV_ARGS(&pRenderTarget));
-			pDxDevice->CreateRenderTargetView(pRenderTarget.Get(), nullptr, rtvHandle);
+		// Create Depth Stencil View 
+		D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc = {};
+		dsvHeapDesc.NumDescriptors = 1;
+		dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
+		dsvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 
-			frames[i].Initialize(pDxDevice, pRenderTarget.Get(), rtvHandle);
-			rtvHandle.ptr += rtvDescriptorSize;
-		}
+		ThrowIfFailed(pDxDevice->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(pDxDsvHeap.GetAddressOf())));
+
+		DXGI_SWAP_CHAIN_DESC1 scd = {};
+		pDxgiSwapChain->GetDesc1(&scd);
+
+		CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+		D3D12_RESOURCE_DESC dsvTextureDesc = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT, scd.Width, scd.Height, 1, 0, 1U, 0U, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+		D3D12_CLEAR_VALUE clearValue = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, 1.0f, 0);
+
+		pDxDevice->CreateCommittedResource(
+			&heapProps,
+			D3D12_HEAP_FLAG_NONE,
+			&dsvTextureDesc,
+			D3D12_RESOURCE_STATE_DEPTH_WRITE,
+			&clearValue,
+			IID_PPV_ARGS(pDxDsvBuffer.GetAddressOf()));
+
+			D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {
+				.Format = DXGI_FORMAT_D32_FLOAT,
+				.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D,
+				.Flags = D3D12_DSV_FLAG_NONE,
+			};
+
+			pDxDevice->CreateDepthStencilView(pDxDsvBuffer.Get(), &dsvDesc, pDxDsvHeap->GetCPUDescriptorHandleForHeapStart());
+
+			for (UINT i = 0; i < FrameCount; i++) {
+				Microsoft::WRL::ComPtr<ID3D12Resource2> pRenderTarget;
+				pDxgiSwapChain->GetBuffer(i, IID_PPV_ARGS(&pRenderTarget));
+				pDxDevice->CreateRenderTargetView(pRenderTarget.Get(), nullptr, rtvHandle);
+
+				frames[i].Initialize(pDxDevice, pRenderTarget.Get(), rtvHandle, pDxDsvHeap->GetCPUDescriptorHandleForHeapStart());
+				rtvHandle.ptr += rtvDescriptorSize;
+			}
 	}
 }
 
