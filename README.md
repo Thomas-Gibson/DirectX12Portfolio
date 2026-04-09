@@ -37,3 +37,4 @@
 # Projects
 * [Hello Triangle](./Projects/Dx12Triangle/) - Draws a simple rainbow triangle.
 * [Hello Texture](./Projects/Dx12Texture/) - Shows texture loading and drawing.
+* [Directional Lighting](./Projects/Dx12Lighting/) - Shows directional lighting applied to a 3D model.
